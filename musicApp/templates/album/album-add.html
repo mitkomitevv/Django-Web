@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <body>
+    <div id="box">
+      <!-- Main Content -->
+      <!--Create Page-->
+      <section class="createPage">
+        <form action="{% url 'album-add' %}" method="post">
+          <fieldset>
+            <legend>Add Album</legend>
+            <div class="container">
+              <!-- Form for Adding Album -->
+                {{ form }}
+                {% csrf_token %}
+              <button class="add-album" type="submit">Add New Album</button>
+            </div>
+          </fieldset>
+        </form>
+      </section>
+    </div>
+  </body>
+{% endblock %}
