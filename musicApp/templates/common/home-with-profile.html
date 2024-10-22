@@ -4,9 +4,9 @@
 {% block content %}
   <section id="catalogPage">
     <!--  If No albums in catalog -->
-    {% if albums %}
+    {% if album_list %}
         <h1>All Albums</h1>
-      {% for album in albums %}
+      {% for album in album_list %}
         <div class="card-box">
           <img src="{{ album.image_url }}" alt="{{ album.description }}" />
           <div>

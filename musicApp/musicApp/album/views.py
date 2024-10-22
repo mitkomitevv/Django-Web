@@ -9,13 +9,11 @@ from musicApp.utils import get_profile
 class AlbumCreateView(AlbumFormMixin, CreateView):
     model = Album
     fields = ['name', 'artist_name', 'genre', 'description', 'image_url', 'price']
-    success_url = reverse_lazy('index')
     template_name = 'album/album-add.html'
+    success_url = reverse_lazy('index')
 
     def form_valid(self, form):
-        form.instance.owner_id = get_profile().pk
-        # instance = form.save(commit=False)
-        # instance.owner = get_profile()
+        form.instance.owner = get_profile()
 
         return super().form_valid(form)
 
@@ -34,14 +32,15 @@ class AlbumUpdateView(AlbumFormMixin, UpdateView):
 
 class AlbumDeleteView(DeleteView):
     model = Album
+    form_class = modelform_factory(Album, fields=['name', 'artist_name', 'genre', 'description', 'image_url', 'price'])
     template_name = 'album/album-delete.html'
     success_url = reverse_lazy('index')
-    form_class = modelform_factory(Album, fields=['name', 'artist_name', 'genre', 'description', 'image_url', 'price'])
 
     # def get_initial(self):
-    #     pk = self.kwargs.get(self.pk_url_kwarg)
-    #     post = Album.objects.get(pk=pk)
-    #     return post.__dict__
+    #     return self.object.__dict__
+    #                                                     If ModelForm
+    # def form_invalid(self, form):
+    #     return self.form_valid(form)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
